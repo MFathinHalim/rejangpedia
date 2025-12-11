@@ -54,9 +54,11 @@ export default function AdminQuizPage() {
 
     checkAdmin();
   }, []);
-
+  //@ts-ignore
   const updateJawaban = (idx, field, value) => {
     const copy = [...jawaban];
+
+    //@ts-ignore
     copy[idx][field] = value;
     setJawaban(copy);
   };

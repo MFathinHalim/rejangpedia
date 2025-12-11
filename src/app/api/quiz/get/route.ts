@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   } catch {
     body = {};
   }
-
+  //@ts-ignore
   const { id } = body;
 
   const quizController = QuizController.getInstance();

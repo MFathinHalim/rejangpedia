@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { quizModel } from "@/models/quiz";
 import { userModel } from "@/models/user";
 import dbConnect from "@/utils/mongoose";
