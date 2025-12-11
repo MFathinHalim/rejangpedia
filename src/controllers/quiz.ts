@@ -78,7 +78,7 @@ class QuizController {
   async answerQuiz(quizId: string, answer: string, username: string) {
     await this.ensureDB();
 
-    const quiz = await quizModel.findOne({ id: quizId });
+    const quiz = await quizModel.findOne({ _id: quizId });
     if (!quiz) return { success: false, message: "Quiz not found" };
 
     // cari jawaban

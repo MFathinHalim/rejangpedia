@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import styles from "./page.module.css";
 
 export default function QuizPage() {
   const [token, setToken] = useState<string | null>(null);
@@ -83,7 +84,7 @@ export default function QuizPage() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        quizId: quiz.id,
+        quizId: quiz._id,
         answer: jawaban,
         username: user.username,
       }),
@@ -98,114 +99,145 @@ export default function QuizPage() {
       className="d-flex container flex-column justify-content-center align-items-center w-100"
       style={{ minHeight: "calc(100vh - 70px)", padding: "20px" }}
     >
-      <h1 className="fw-bold mb-4 fs-2 text-center">Quiz Rejang</h1>
+      <div className={styles.container}>
+        <h1 className="fw-bold mb-4 fs-2 text-center">Quiz Rejang</h1>
 
-      {/* START SCREEN */}
-      {!quiz && !loading && (
-        <div className="d-flex flex-column align-items-center text-center gap-3 w-100">
-          <img
-            src="https://shapes.inc/api/public/avatar/mahirushiina-e583"
-            style={{
-              width: "260px",
-              height: "260px",
-              objectFit: "cover",
-            }}
-          />
+        {!quiz && !loading && (
+          <div className="d-flex flex-column align-items-center text-center gap-4 w-100">
+            {/* IMAGE */}
+            <img
+              src="https://cdn.rafled.com/anime-icons/images/RIhvIEOjHsHOlo1rsnLQGZDaVJyUuJd9.jpg"
+              style={{ width: "260px", height: "260px", objectFit: "cover" }}
+            />
 
-          <p className="text-muted">
-            Jawab pertanyaan dan tingkatkan skor kamu.
-          </p>
+            {/* TAGLINE */}
+            <h5 className="fw-semibold opacity-50">
+              Cubɔ kito kejar posisi paling atas lah!
+            </h5>
 
-          <button
-            className="btn btn-primary btn-lg w-75"
-            onClick={fetchNewQuiz}
-          >
-            Mulai Quiz
-          </button>
+            {/* RULES */}
+            <div className="accordion w-100" id="rulesAccordion">
+              <div className="accordion-item bg-dark text-light border-secondary">
+                <h2 className="accordion-header">
+                  <button
+                    className="accordion-button collapsed fw-bold bg-dark text-light"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#rulesCollapse"
+                  >
+                    Aturan Quiz
+                  </button>
+                </h2>
 
-          <Link
-            href="/quiz/leaderboard"
-            className="btn btn-outline-secondary w-75"
-          >
-            Lihat Leaderboard
-          </Link>
-        </div>
-      )}
+                <div
+                  id="rulesCollapse"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#rulesAccordion"
+                >
+                  <div className="accordion-body text-start">
+                    <ul className="mb-0">
+                      <li>10 pertanyaan acak</li>
+                      <li>Jawaban benar mendapat +10 poin</li>
+                      <li>Salah tidak mengurangi skor</li>
+                      <li>Skormu masuk ke leaderboard</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      {/* LOADING */}
-      {loading && (
-        <div className="w-100 text-center">
-          <div className="placeholder-glow">
-            <span className="placeholder col-8 mb-3"></span>
-            <span className="placeholder col-12 mb-2"></span>
-            <span className="placeholder col-12 mb-2"></span>
-            <span className="placeholder col-12"></span>
+            {/* BUTTONS */}
+            <button
+              className="btn btn-primary btn-lg w-100"
+              onClick={fetchNewQuiz}
+            >
+              Mulai Quiz
+            </button>
+
+            <Link
+              href="/quiz/leaderboard"
+              className="btn btn-outline-secondary w-100"
+            >
+              Lihat Leaderboard
+            </Link>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* QUESTION */}
-      {quiz && !answered && !loading && (
-        <div className="d-flex flex-column align-items-center text-center gap-4 w-100">
-          <img
-            src={quiz.image}
-            alt="Quiz Image"
-            style={{ height: "350px", objectFit: "contain", width: "100%" }}
-            className="mb-3 object-contain"
-          />
-          <h4 className="fw-semibold">{quiz.soal}</h4>
-
-          <div className="d-flex flex-column gap-3 w-100">
-            {quiz.multipleQuestion?.map((opt: any, i: number) => (
-              <button
-                key={i}
-                className="btn btn-outline-primary btn-lg w-100"
-                onClick={() => answerQuiz(opt.jawaban)}
-              >
-                {opt.jawaban}
-              </button>
-            ))}
+        {/* LOADING */}
+        {loading && (
+          <div className="w-100 text-center">
+            <div className="placeholder-glow">
+              <span className="placeholder col-8 mb-3"></span>
+              <span className="placeholder col-12 mb-2"></span>
+              <span className="placeholder col-12 mb-2"></span>
+              <span className="placeholder col-12"></span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* RESULT SCREEN */}
-      {answered && result && !loading && (
-        <div className="d-flex flex-column align-items-center text-center gap-3 w-100">
-          <img
-            src={
-              result.correct
-                ? "https://preview.redd.it/happy-birthday-to-mahiru-shiina-v0-7mp2g6seb25e1.jpeg?auto=webp&s=e7ba4e26a04056051d1a3b91a99427582bbf72d7"
-                : "https://cdn.rafled.com/anime-icons/images/rxY7FEUrsfxxuypVEyIeXDc4Ge859OH6.jpg"
-            }
-            style={{
-              width: "360px",
-              height: "360px",
-              borderRadius: "20px",
-            }}
-          />
+        {/* QUESTION */}
+        {quiz && !answered && !loading && (
+          <div className="d-flex flex-column align-items-center text-center gap-4 w-100">
+            <img
+              src={quiz.image}
+              alt="Quiz Image"
+              style={{ height: "350px", objectFit: "contain", width: "100%" }}
+              className="mb-3 object-contain"
+            />
+            <h4 className="fw-semibold">{quiz.soal}</h4>
 
-          <h3 className="fw-bold mb-1">
-            {result.correct ? `Benar! +${result.addedScore}` : "Salah"}
-          </h3>
+            <div className="d-flex flex-column gap-3 w-100">
+              {quiz.multipleQuestion?.map((opt: any, i: number) => (
+                <button
+                  key={i}
+                  className="btn btn-outline-primary btn-lg w-100"
+                  onClick={() => answerQuiz(opt.jawaban)}
+                >
+                  {opt.jawaban}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
-          <p className="text-muted">Total skor kamu: {result.totalScore}</p>
+        {/* RESULT SCREEN */}
+        {answered && result && !loading && (
+          <div className="d-flex flex-column align-items-center text-center gap-3 w-100">
+            <img
+              src={
+                result.correct
+                  ? "https://preview.redd.it/happy-birthday-to-mahiru-shiina-v0-7mp2g6seb25e1.jpeg?auto=webp&s=e7ba4e26a04056051d1a3b91a99427582bbf72d7"
+                  : "https://cdn.rafled.com/anime-icons/images/rxY7FEUrsfxxuypVEyIeXDc4Ge859OH6.jpg"
+              }
+              style={{
+                width: "360px",
+                height: "360px",
+                borderRadius: "20px",
+              }}
+            />
 
-          <button
-            className="btn btn-primary btn-lg w-75"
-            onClick={fetchNewQuiz}
-          >
-            Pertanyaan Berikutnya
-          </button>
+            <h3 className="fw-bold mb-1">
+              {result.correct ? `Benar! +${result.addedScore}` : "Salah"}
+            </h3>
 
-          <Link
-            href="/quiz/leaderboard"
-            className="btn btn-outline-secondary w-75"
-          >
-            Lihat Leaderboard
-          </Link>
-        </div>
-      )}
+            <p className="text-muted">Total skor kamu: {result.totalScore}</p>
+
+            <button
+              className="btn btn-primary btn-lg w-75"
+              onClick={fetchNewQuiz}
+            >
+              Pertanyaan Berikutnya
+            </button>
+
+            <Link
+              href="/quiz/leaderboard"
+              className="btn btn-outline-secondary w-75"
+            >
+              Lihat Leaderboard
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

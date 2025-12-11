@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
-      id: randomQuiz.id,
+      _id: randomQuiz._id,
       soal: randomQuiz.soal,
       image: randomQuiz.image,
       multipleQuestion: randomQuiz.multipleQuestion,
