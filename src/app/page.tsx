@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import Tooltip from '@mui/material/Tooltip';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "@mui/material/Tooltip";
 import { Zoom } from "@mui/material";
 import { LogIn, LogOut, Search } from "lucide-react";
 
@@ -124,19 +124,33 @@ export default function Home() {
             </button>
           </>
         ) : (
-          <a href='/user/login' className="pe-3 rounded-pill bd-highlight btn btn-light hover-text-primary">
+          <a
+            href="/user/login"
+            className="pe-3 rounded-pill bd-highlight btn btn-light hover-text-primary"
+          >
             <LogIn />
           </a>
         )}
-        <a href="https://kamusrejang.glitch.me" className="py-2 bd-highlight hover-text-danger">
+        <a
+          href="https://kamusrejang.glitch.me"
+          className="py-2 bd-highlight hover-text-danger"
+        >
           Kamus Bahasa Rejang
+        </a>
+        <a href="/quiz" className="py-2 bd-highlight hover-text-primary">
+          Quiz
         </a>
       </div>
 
       <div className="container">
         <div className="h-100 d-flex justify-content-center flex-column">
           <div className="header text-dark text-center rounded-bottom">
-            <img id="logo" draggable="false" className="border-0" src="/logo.png" />
+            <img
+              id="logo"
+              draggable="false"
+              className="border-0"
+              src="/logo.png"
+            />
           </div>
 
           <div className="mt-4 mb-4 d-flex justify-content-center position-relative">
@@ -163,9 +177,13 @@ export default function Home() {
               Cari Apo
             </button>
 
-            <Tooltip title={`${!user ? "Kamu perlu masuk" : "Tulis Artikel"}`} arrow slots={{
-              transition: Zoom,
-            }}>
+            <Tooltip
+              title={`${!user ? "Kamu perlu masuk" : "Tulis Artikel"}`}
+              arrow
+              slots={{
+                transition: Zoom,
+              }}
+            >
               <a
                 className={`btn btn-secondary px-3 btn-lg ${!user}`}
                 href={user ? "/post/create" : "/user/login"}
@@ -175,11 +193,15 @@ export default function Home() {
             </Tooltip>
           </div>
           <div className="d-flex justify-content-center gap-2 mt-4">
-            <p>Baca juga: <a href="https://mfathinhalim.github.io" className="text-sec">Tentang Fathin</a></p>
-            
-            <a className="text-sec"
-              href="/rules">
-                Peraturan Artikel
+            <p>
+              Baca juga:{" "}
+              <a href="https://mfathinhalim.github.io" className="text-sec">
+                Tentang Fathin
+              </a>
+            </p>
+
+            <a className="text-sec" href="/rules">
+              Peraturan Artikel
             </a>
           </div>
         </div>
@@ -188,13 +210,16 @@ export default function Home() {
           <div className="row">
             {[...Array(3)].map((_, index) => (
               <div className="col mt-2" key={index}>
-                <div className="card" style={{
-                  background: "rgba(0, 0, 0, 0)",
-                  border: "none",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}>
-                    <h6
+                <div
+                  className="card"
+                  style={{
+                    background: "rgba(0, 0, 0, 0)",
+                    border: "none",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <h6
                     className="mt-2 placeholder-title"
                     style={{
                       backgroundColor: "var(--primary)",
@@ -204,8 +229,8 @@ export default function Home() {
                     }}
                   ></h6>
                   <div
-                      className="listing-image rounded"
-                      style={{
+                    className="listing-image rounded"
+                    style={{
                       width: "100%",
                       height: "150px",
                       backgroundColor: "var(--secondary)", // warna abu-abu
@@ -215,7 +240,8 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>) : (
+          </div>
+        ) : (
           <div>
             <div className="row">
               {data.map((entry, index) => (
@@ -245,7 +271,10 @@ export default function Home() {
                     </h6>
                     <img
                       className="listing-image rounded"
-                      src={entry.Image || "https://e1.pxfuel.com/desktop-wallpaper/908/281/desktop-wallpaper-non-copyrighted-no-copyright.jpg"}
+                      src={
+                        entry.Image ||
+                        "https://e1.pxfuel.com/desktop-wallpaper/908/281/desktop-wallpaper-non-copyrighted-no-copyright.jpg"
+                      }
                       alt={entry.Title}
                     />
                   </a>
