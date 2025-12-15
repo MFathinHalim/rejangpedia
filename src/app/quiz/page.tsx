@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { useRef } from "react";
 
 export default function QuizPage() {
   const [token, setToken] = useState<string | null>(null);
@@ -12,6 +13,17 @@ export default function QuizPage() {
   const [loading, setLoading] = useState(false);
   const [answered, setAnswered] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const correctAudioRef = useRef<HTMLAudioElement | null>(null);
+  const wrongAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (wrongAudioRef.current) {
+      wrongAudioRef.current.volume = 0.2;
+    }
+    if (correctAudioRef.current) {
+      correctAudioRef.current.volume = 0.7;
+    }
+  }, []);
 
   const refreshAccessToken = async () => {
     try {
@@ -73,6 +85,16 @@ export default function QuizPage() {
     setQuiz(json);
     setLoading(false);
   };
+  const playAudio = async (audio: HTMLAudioElement | null) => {
+    if (!audio) return;
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      await audio.play();
+    } catch (err) {
+      console.error("Audio gagal diputar:", err);
+    }
+  };
 
   const answerQuiz = async (jawaban: string) => {
     setAnswered(true);
@@ -92,6 +114,11 @@ export default function QuizPage() {
 
     const json = await res.json();
     setResult(json);
+    if (json.correct) {
+      playAudio(correctAudioRef.current);
+    } else {
+      playAudio(wrongAudioRef.current);
+    }
   };
 
   return (
@@ -99,6 +126,8 @@ export default function QuizPage() {
       className="d-flex container flex-column justify-content-center align-items-center w-100"
       style={{ minHeight: "calc(100vh - 70px)", padding: "20px" }}
     >
+      <audio ref={correctAudioRef} src="/shine.mp3" preload="auto" />
+      <audio ref={wrongAudioRef} src="/sad.mp3" preload="auto" />
       <div className={styles.container}>
         <h1 className="fw-bold mb-4 fs-2 text-center">Quiz Rejang</h1>
 
@@ -106,7 +135,7 @@ export default function QuizPage() {
           <div className="d-flex flex-column align-items-center text-center gap-4 w-100">
             {/* IMAGE */}
             <img
-              src="https://cdn.rafled.com/anime-icons/images/RIhvIEOjHsHOlo1rsnLQGZDaVJyUuJd9.jpg"
+              src="./happy.gif"
               style={{ width: "260px", height: "260px", objectFit: "cover" }}
             />
 
@@ -204,11 +233,7 @@ export default function QuizPage() {
         {answered && result && !loading && (
           <div className="d-flex flex-column align-items-center text-center gap-3 w-100">
             <img
-              src={
-                result.correct
-                  ? "https://preview.redd.it/happy-birthday-to-mahiru-shiina-v0-7mp2g6seb25e1.jpeg?auto=webp&s=e7ba4e26a04056051d1a3b91a99427582bbf72d7"
-                  : "https://cdn.rafled.com/anime-icons/images/rxY7FEUrsfxxuypVEyIeXDc4Ge859OH6.jpg"
-              }
+              src={result.correct ? "./happy.gif" : "./sad.gif"}
               style={{
                 width: "360px",
                 height: "360px",

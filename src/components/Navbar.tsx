@@ -19,7 +19,8 @@ const Navbar = () => {
     require("bootstrap/dist/js/bootstrap.js");
   }, []);
 
-  if (pathname === "/" || pathname === "/search") return;
+  if (pathname === "/home" || pathname === "/search" || pathname === "/")
+    return;
 
   useEffect(() => {
     const handleScroll = () => {

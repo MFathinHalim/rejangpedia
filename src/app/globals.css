@@ -10,6 +10,66 @@
 [lang="rejang"] {
     font-family: "Bangkahulu", sans-serif;
 }
+.hero-blur {
+    position: relative;
+    overflow: hidden;
+}
+.hero-blur2 {
+    position: relative;
+    overflow: hidden;
+}
+.culture-banner {
+    position: relative;
+    height: 15rem;
+    border-radius: 20px;
+    overflow: hidden;
+
+    background-image: url("https://i.ytimg.com/vi/jYobcStI8nY/maxresdefault.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* overlay gelap */
+.culture-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* teks di atas overlay */
+.banner-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-blur::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: url("https://ftnews.co.id/storage/comp/1000642649-271020251.webp")
+        center / cover no-repeat;
+
+    filter: blur(16px) brightness(0.7);
+    transform: scale(1.1);
+
+    z-index: -1;
+}
+
+.hero-blur2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Tes_Lake_Lebong_Regency%2C_Bengkulu.jpg/1200px-Tes_Lake_Lebong_Regency%2C_Bengkulu.jpg")
+        center / cover no-repeat;
+
+    filter: blur(16px) brightness(0.7);
+    transform: scale(1.1);
+
+    z-index: -1;
+}
 
 :root {
     --text: #121212;
@@ -19,6 +79,7 @@
     --primary-text: #121212;
     --secondary-text: #121212;
     --primary-border: #a0da50;
+
     --secondary: #43c2de;
     --accent: #f7f5fe;
     --error: #ff6961;
@@ -56,15 +117,31 @@ body {
     font-family: "Outfit", Arial, Helvetica, sans-serif !important;
     text-align: justify !important;
     font-weight: 300 !important;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(99, 102, 241, 0.15),
+            transparent 60%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(14, 165, 233, 0.15),
+            transparent 60%
+        ),
+        var(--background) !important;
+    color: var(--text) !important;
+    min-height: 100vh;
 }
 .bd-highlight {
     font-weight: bold !important;
 }
-body,
 .navbar {
-    background-color: var(--background) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color: var(--text) !important;
 }
+
 button {
     color: var(--text) !important;
 }
@@ -124,13 +201,15 @@ a {
     transition: all 0.5s !important;
     background-color: var(--accent) !important;
     border: 1px solid var(--accent) !important;
-    font-weight: bold !important;
 }
 .btn-light {
     border: none;
 }
 .btn:hover {
     opacity: 80%;
+}
+.border-sec-top {
+    border-top: 1px solid var(--secondary) !important;
 }
 .btn-primary,
 .swal2-confirm {
@@ -395,4 +474,36 @@ a {
 
 .list-group {
     background: transparent !important;
+}
+
+.ai-box-bootstrap {
+    width: 320px;
+}
+
+.typing-dots .dot {
+    width: 6px;
+    height: 6px;
+    background-color: #adb5bd;
+    border-radius: 50%;
+    animation: typingDot 1.4s infinite;
+}
+
+.typing-dots .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dots .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingDot {
+    0% {
+        opacity: 0.3;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
 }
