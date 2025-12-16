@@ -84,7 +84,7 @@ export default function Home() {
           </div>
         </section>
         {/* Image Placeholder Row*/}
-        <div className="row justify-content-center align-items-end g-4 mt-3">
+        <div className="row justify-content-center align-items-end g-4 mt-3 px-3">
           <div className="col-6 d-none d-md-block col-md-2 d-flex justify-content-center">
             <img
               src="https://ik.imagekit.io/9hpbqscxd/RejangPedia/image-3c3d5ac0-70a6-11ee-acd8-7d4adb250123.jpg"
@@ -97,7 +97,7 @@ export default function Home() {
               }}
             />
           </div>
-          <div className="col-6 col-md-2 d-flex justify-content-center">
+          <div className="col-12 col-md-2 d-flex justify-content-center">
             <img
               src="https://ik.imagekit.io/9hpbqscxd/RejangPedia/image-962de910-70a5-11ee-acd8-7d4adb250123.jpg"
               className="rounded-4"
@@ -121,7 +121,7 @@ export default function Home() {
               }}
             />
           </div>
-          <div className="col-6 col-md-2 d-flex justify-content-center">
+          <div className="d-none col-md-2 d-md-flex justify-content-center">
             <img
               src="https://ik.imagekit.io/9hpbqscxd/RejangPedia/image-954971f0-70a4-11ee-acd8-7d4adb250123.jpg"
               className="rounded-4"
@@ -304,7 +304,7 @@ export default function Home() {
         </div>
       </section>
       <footer className="border-sec-top border-primar py-5 px-md-5 mt-5">
-        <div className="d-flex flex-row justify-content-between g-4">
+        <div className="d-flex flex-row justify-content-center g-4">
           {/* Brand */}
           <div className="col-md-4">
             <div className="d-flex align-items-center gap-2 mb-3">
