@@ -43,7 +43,7 @@ const Navbar = () => {
           <div
             className={`container-fluid d-flex align-items-center justify-content-between`}
           >
-            <a className="navbar-brand me-3 ms-0" href="/">
+            <a className="navbar-brand me-3 ms-0" href="/home">
               <img src="/logo-icon.png" width="45" height="45" alt="Logo" />
             </a>
 

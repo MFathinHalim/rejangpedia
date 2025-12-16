@@ -9,6 +9,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import { useRef, useState } from "react";
+import { marked } from "marked";
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -66,7 +67,7 @@ export default function Home() {
             <br />
             Smart Culture Digital Legacy
           </h1>
-
+          <small>With Dinda Menjawab</small>
           <p className="display-6 py-3" id="bangkahulu" lang="rejang">
             cir ap id is in
           </p>
@@ -147,12 +148,46 @@ export default function Home() {
         </div>
       </div>
       <div className="container">
-        <section className="py-5 my-5">
+        <div className="px-3 mt-5">
+          <h2 className="fw-bold mb-3 display-4 text-primar">Dinda Menjawab</h2>{" "}
+          <div className="d-flex align-items-start gap-3">
+            <img
+              src="/happy.gif"
+              alt="AI Avatar"
+              className="shadow-sm flex-shrink-0 ai-avatar rounded-circle"
+              style={{
+                width: "101px",
+                height: "101px",
+                objectFit: "cover",
+                cursor: "pointer",
+                transition: "all 0.25s ease",
+                transform: "scale(1)",
+              }}
+            />
+
+            <div>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html:
+                    "Rejang adalah salah satu suku bangsa yang berasal dari Provinsi Bengkulu, Indonesia. Suku Rejang merupakan suku asli yang mendiami wilayah Provinsi Bengkulu, terutama di daerah Rejang Lebong, Lebong, dan Kepahiang. Berikut adalah beberapa aspek yang terkait dengan suku Rejang: Asal Usul: Suku Rejang diyakini telah mendiami wilayah Bengkulu sejak lama...",
+                }}
+              />
+
+              <a
+                href="/search/rejang"
+                className="btn btn-sm btn-outline-primary"
+              >
+                Baca Selengkapnya
+              </a>
+            </div>
+          </div>
+        </div>
+        <hr className={`mt-4`} />
+
+        <section className="py-5 mb-5">
           <div className="d-flex flex-column-reverse gap-3 flex-md-row justify-content-between align-items-center">
             <div className="col-md-6">
-              <h2 className="fw-bold mb-3 display-4 text-primar">
-                rejangpedia
-              </h2>
+              <h2 className="fw-bold mb-3 display-4 text-sec">rejangpedia</h2>
 
               <p className="fs-5">
                 sebuah platform all-in-one dengan semangat gotong royong, yang
@@ -174,7 +209,7 @@ export default function Home() {
         <section className="py-5 my-5">
           <div className="d-flex flex-column-reverse gap-3 flex-md-row-reverse justify-content-between align-items-center">
             <div className="col-md-6 text-end">
-              <h2 className="fw-bold mb-3 display-4 text-sec">
+              <h2 className="fw-bold mb-3 display-4 text-primar">
                 cari artikel gampang
               </h2>
 
@@ -230,12 +265,17 @@ export default function Home() {
       <div className="hero-blur2">
         <section className="py-5 my-5 row align-items-center justify-content-center text-white">
           <p className="mb-3 text-center h3 fw-light col-md-6">
-            <Bot width={70} height={70} className="mb-2" />
+            <img
+              src="/happy.gif"
+              width={70}
+              height={70}
+              className="mb-2 rounded-circle"
+            />
             <br />
-            <span className="fw-bold">Rangkuman AI</span> membantu Anda memahami
-            inti artikel budaya Rejang dengan cepat dan mudah. Teknologi AI
-            merangkum poin-poin penting dari setiap artikel sehingga pembaca
-            dapat menangkap makna utama tanpa harus membaca keseluruhan isi,
+            <span className="fw-bold">Dinda</span> membantu Anda memahami inti
+            artikel budaya Rejang dengan cepat dan mudah. Teknologi AI merangkum
+            poin-poin penting dari setiap artikel sehingga pembaca dapat
+            menangkap makna utama tanpa harus membaca keseluruhan isi,
             menjadikan pembelajaran budaya lebih efisien dan ramah untuk semua
             kalangan.
           </p>
@@ -258,7 +298,7 @@ export default function Home() {
               href="https://play.google.com/store/apps/details?id=com.domatomoharu.rejangpedia&hl=id"
               className="btn btn-dark d-flex align-items-center gap-2 px-4 py-2"
             >
-              <Play /> Get In On Google Play
+              <Play /> Get On Google Play
             </a>
           </div>
         </div>

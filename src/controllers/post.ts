@@ -56,37 +56,39 @@ export default class rejangpedia {
     return { data: mahiru };
   }
 
-  async search(searchTerm: string, page: number = 1, limit: number = 10) {
-    let combinedResults = []; // Inisialisasi atau reset nilai ke array kosong setiap kali metode dipanggil
+  async search(searchTerm: string, page = 1, limit = 10) {
+    const keywords = decodeURIComponent(searchTerm)
+      .toLowerCase()
+      .trim()
+      .split(/\s+/);
 
-    // 1. Mencari di data lokal (menggunakan skip dan limit untuk pagination)
     const skip = (page - 1) * limit;
-    const localDataResults = await this.data
-      .find({ Title: { $regex: searchTerm, $options: "i" } })
-      .skip(skip) // Skip untuk pagination
-      .limit(limit) // Batas hasil berdasarkan limit
-      .slice("Content", 1) // Mengambil hanya bab pertama dari array Content
-      .exec();
 
-    combinedResults = [...localDataResults];
-    if (page === 1) {
-      // 2. Mencari di Wikipedia
-      const wikipediaResults = await this.searchWikipedia(searchTerm);
+    let resultsMap = new Map<string, { item: any; score: number }>();
 
-      // 3. Menggabungkan hasil dari kedua sumber tanpa duplikasi
-      if (wikipediaResults) {
-        wikipediaResults.forEach((wikipediaItem: Data) => {
-          const isDuplicate = localDataResults.some(
-            (localItem) => localItem.id === wikipediaItem.id,
-          );
+    for (const word of keywords) {
+      const found = await this.data
+        .find({
+          Title: { $regex: word, $options: "i" },
+        })
+        .slice("Content", 1)
+        .exec();
 
-          //@ts-ignore
-          if (!isDuplicate) combinedResults.push(wikipediaItem);
-        });
+      for (const item of found) {
+        if (!resultsMap.has(item.id)) {
+          resultsMap.set(item.id, { item, score: 1 });
+        } else {
+          resultsMap.get(item.id)!.score += 1;
+        }
       }
     }
 
-    return combinedResults;
+    // urutin berdasarkan jumlah kata yang match
+    const sortedResults = Array.from(resultsMap.values())
+      .sort((a, b) => b.score - a.score)
+      .map((v) => v.item);
+
+    return sortedResults.slice(skip, skip + limit);
   }
 
   async ongoing(page: number = 1, limit: number = 10) {

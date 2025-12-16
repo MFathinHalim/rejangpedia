@@ -1,36 +1,48 @@
 import { NextRequest } from "next/server";
+import { chatCompletionsLlamaKolosal } from "@/lib/ai"; // sesuaikan path
 
-  export async function GET(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    let prompt = searchParams.get("prompt") || "default";
-    const apiurl = `https://sandipbaruwal.onrender.com/gemini?prompt=${encodeURIComponent(
-  "Jelaskan secara super lengkap dan menggunakan rich text dan highlight 1 kalimat pengertian utamanya dengan warna bg #245292 dan text white . Langsung aja gak usah pake penjelasan 'baiklah bla bla bla' tentang " + prompt
-      )}`;
-        
-    try {
-      const response = await fetch(apiurl, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-  
-      const data = await response.json();
-  
-      return new Response(JSON.stringify(data), { // Perbaikan: Harus diubah ke JSON.stringify()
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const prompt = searchParams.get("prompt") || "topik tidak disebutkan";
+
+  const system = `
+Kamu adalah asisten edukasi.
+Jelaskan secara SUPER LENGKAP, terstruktur, dan mudah dipahami.
+Gunakan rich text (HTML).
+Highlight 1 kalimat pengertian utama menggunakan:
+- background-color: #245292
+- color: white
+JANGAN GUNAKAN CSS LAINNYA SELAIN 2 INI
+JANGAN gunakan kalimat pembuka seperti "baiklah", "tentu", dll.
+Langsung ke isi.
+`;
+
+  const userPrompt = `Jelaskan tentang ${prompt}`;
+
+  try {
+    const result = await chatCompletionsLlamaKolosal(userPrompt, system);
+    return new Response(
+      JSON.stringify({
+        success: true,
+        answer: result,
+      }),
+      {
         status: 200,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*", // Bypass CORS
-          "Access-Control-Allow-Methods": "GET, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Origin": "*",
         },
-      });
-    } catch (error) {
-      console.error("Error fetching API:", error);
-      return new Response(JSON.stringify({ error: "Gagal mengambil data" }), { status: 500 });
-    }
+      },
+    );
+  } catch (error) {
+    console.error("AI ERROR:", error);
+
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: "Gagal memproses AI",
+      }),
+      { status: 500 },
+    );
   }
+}

@@ -175,6 +175,35 @@ export default function Home() {
       </div>
 
       <div className="container">
+        <div>
+          <div className="d-flex align-items-start gap-3">
+            <img
+              src="/happy.gif"
+              alt="AI Avatar"
+              className="shadow-sm flex-shrink-0 ai-avatar rounded-circle"
+              style={{
+                width: "101px",
+                height: "101px",
+                objectFit: "cover",
+                cursor: "pointer",
+                transition: "all 0.25s ease",
+                transform: "scale(1)",
+              }}
+            />
+
+            <div
+              style={{ border: "1px solid var(--primary)" }}
+              className="rounded-4 p-3 shadow-sm w-100"
+            >
+              <p>
+                Mulailah mencari, dan nantikan jawaban dari Dinda yang siap
+                membantu.
+              </p>
+              <small>Dinda • AI rejangpedia</small>
+            </div>
+          </div>
+        </div>
+        <hr className={`mt-4 mb-0`} />
         <div className="h-100 d-flex justify-content-center flex-column">
           <div className="header text-dark text-center rounded-bottom">
             <img
@@ -326,7 +355,7 @@ export default function Home() {
                       </h6>
 
                       <small>Writed by {entry.Pembuat || "Rejangpedia"}</small>
-                      <p className="m-0">
+                      <p className="m-0 mt-1">
                         {
                           typeof entry.Content === "string"
                             ? entry.Content.replace(/<[^>]+>/g, "").substring(
