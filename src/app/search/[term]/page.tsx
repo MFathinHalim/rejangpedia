@@ -3,12 +3,23 @@ import SearchPage from "./searchpage"; // Import the client component
 
 // Optimized SEO Metadata for Search Page
 export const metadata: Metadata = {
-  title: "Cari Artikel Terbaik - Rejangpedia | Budaya, Sejarah, dan Bahasa Rejang",
-  description: "Temukan artikel terbaik tentang budaya, sejarah, bahasa, dan warisan Rejang di Rejangpedia. Dapatkan informasi terbaru dan akurat seputar budaya Rejang di satu tempat.",
-  keywords: ["Rejangpedia", "budaya Rejang", "sejarah Rejang", "bahasa Rejang", "artikel Rejang", "warisan budaya", "Rejang Indonesia"],
+  title:
+    "Cari Artikel Terbaik - Rejangpedia | Budaya, Sejarah, dan Bahasa Rejang",
+  description:
+    "Temukan artikel terbaik tentang budaya, sejarah, bahasa, dan warisan Rejang di Rejangpedia. Dapatkan informasi terbaru dan akurat seputar budaya Rejang di satu tempat.",
+  keywords: [
+    "Rejangpedia",
+    "budaya Rejang",
+    "sejarah Rejang",
+    "bahasa Rejang",
+    "artikel Rejang",
+    "warisan budaya",
+    "Rejang Indonesia",
+  ],
   openGraph: {
     title: "Cari Artikel Terbaik - Rejangpedia",
-    description: "Jelajahi artikel terbaik tentang budaya, sejarah, dan bahasa Rejang di Rejangpedia. Cari informasi terpercaya seputar warisan budaya Rejang.",
+    description:
+      "Jelajahi artikel terbaik tentang budaya, sejarah, dan bahasa Rejang di Rejangpedia. Cari informasi terpercaya seputar warisan budaya Rejang.",
     images: ["/logo.png"],
     url: "https://rejangpedia.vercel.app/search",
     type: "website",
@@ -16,7 +27,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Cari Artikel - Rejangpedia | Budaya, Sejarah, Bahasa",
-    description: "Cari artikel terbaik tentang budaya Rejang di Rejangpedia. Dapatkan informasi seputar sejarah, bahasa, dan warisan budaya Rejang.",
+    description:
+      "Cari artikel terbaik tentang budaya Rejang di Rejangpedia. Dapatkan informasi seputar sejarah, bahasa, dan warisan budaya Rejang.",
     images: ["/logo.png"],
   },
   robots: {
@@ -27,7 +39,7 @@ export const metadata: Metadata = {
     canonical: "https://rejangpedia.vercel.app/search", // URL utama untuk menghindari duplikat
   },
   other: {
-    "author": "Rejangpedia",
+    author: "Rejangpedia",
     "og:locale": "id_ID", // Bahasa lokal Indonesia untuk Open Graph
   },
 };

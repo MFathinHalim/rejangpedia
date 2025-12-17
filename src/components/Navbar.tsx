@@ -19,7 +19,8 @@ const Navbar = () => {
     require("bootstrap/dist/js/bootstrap.js");
   }, []);
 
-  if (pathname === "/" || pathname === "/search") return;
+  if (pathname === "/home" || pathname === "/search" || pathname === "/")
+    return;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,14 +40,24 @@ const Navbar = () => {
     <>
       {!pathname.includes("user") && (
         <nav className="navbar sticky-top w-100 py-1" id="khususDekstop">
-          <div className={`container-fluid d-flex align-items-center justify-content-between`}>
-            <a className="navbar-brand me-3 ms-0" href="/">
+          <div
+            className={`container-fluid d-flex align-items-center justify-content-between`}
+          >
+            <a className="navbar-brand me-3 ms-0" href="/home">
               <img src="/logo-icon.png" width="45" height="45" alt="Logo" />
             </a>
 
             {/* Form dengan icon di dalam input */}
             <form className="d-none d-lg-flex flex-grow-1 position-relative">
-              <Search className="position-absolute" style={{ color:"gray", left: "15px", top: "50%", transform: "translateY(-50%)" }} />
+              <Search
+                className="position-absolute"
+                style={{
+                  color: "gray",
+                  left: "15px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              />
               <input
                 autoComplete="off"
                 type="text"
@@ -63,8 +74,8 @@ const Navbar = () => {
             </form>
 
             <div className="d-flex align-items-center ms-3">
-              <a className="text-decoration-none mx-2" href="/rules">
-                Peraturan
+              <a className="text-decoration-none mx-2" href="/quiz">
+                Quiz
               </a>
               <a className="text-decoration-none mx-2" href="/search">
                 Jelajahi

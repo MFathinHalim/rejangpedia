@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    justify-content: center; /* Posisi horizontal */
+    flex-direction: column; /* Elemen dalam kolom */
+    width: 100%;
+}
+@media only screen and (min-width: 600px) {
+    .container {
+        display: flex;
+        justify-content: center; /* Posisi horizontal */
+        flex-direction: column; /* Elemen dalam kolom */
+        width: 80% !important;
+    }
+}
+
+.podium-wrapper {
+    margin-bottom: 2rem;
+}
+
+.podium-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.rank-number {
+    font-size: 1.2rem;
+}
+
+.username {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.score {
+    font-size: 1rem;
+}

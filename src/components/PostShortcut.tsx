@@ -26,7 +26,7 @@ export default function PostShortcut({ post }: any) {
                       ? post.Content.replace(/<[^>]+>/g, "").substring(0, 100) // Jika Content adalah string
                       : post.Content[0]?.babContent
                           ?.replace(/<[^>]+>/g, "")
-                          .substring(0, 100) // Jika Content adalah list dengan babContent
+                          .substring(0, 120) // Jika Content adalah list dengan babContent
                   }
                   ...
                 </p>
