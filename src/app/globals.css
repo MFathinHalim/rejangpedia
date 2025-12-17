@@ -135,7 +135,8 @@ body {
 .bd-highlight {
   font-weight: bold !important;
 }
-.navbar {
+.navbar,
+.bgBlur {
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   color: var(--text) !important;
