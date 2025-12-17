@@ -6,6 +6,10 @@ type Data = {
     Pembuat: string;
     Diedit?: string;
     Link: string;
+    Location?: {
+        lat: string;
+        lng: string;
+    };
     Waktu?: string;
     Edit?: string;
     Content: {
