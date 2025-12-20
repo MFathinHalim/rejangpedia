@@ -223,7 +223,7 @@ export default class rejangpedia {
     await this.ongoingData.updateOne(
       { id: data.id },
       { $set: updatedData },
-      { upsert: true },
+      { upsert: true }
     );
 
     // Kirim notifikasi ke Discord
@@ -270,7 +270,7 @@ export default class rejangpedia {
     await this.sendDiscordNotification(
       "Artikel Baru Ditambahkan",
       body.Title,
-      uniqueFileName,
+      uniqueFileName
     );
 
     return {

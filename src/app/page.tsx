@@ -51,7 +51,7 @@ export default function Home() {
       >
         {isPlaying ? <Volume2 /> : <VolumeX />}
       </button>
-      <div className="d-flex flex-column align-items-center justify-content-center vh-100 py-5 hero-blur">
+      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 py-5 hero-blur">
         <div className="d-flex justify-content-center mb-4">
           <img
             src="/logo-icon.png"
@@ -224,8 +224,9 @@ export default function Home() {
             <img
               src="/hook1.png"
               alt="Rejangpedia Logo"
-              className="rounded-4 w-40"
+              className="rounded-4"
               style={{
+                width: "400px",
                 objectFit: "cover",
                 height: "300px",
               }}

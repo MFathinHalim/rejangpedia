@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <>
       {!pathname.includes("user") && (
-        <nav className="navbar sticky-top w-100 py-1" id="khususDekstop">
+        <nav className="navbar sticky-top w-100 py-1 bgBlur" id="khususDekstop">
           <div
             className={`container-fluid d-flex align-items-center justify-content-between`}
           >
