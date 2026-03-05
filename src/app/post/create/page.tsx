@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 import { set } from "mongoose";
+import { useAuth } from "@/context/AuthContext";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -22,66 +23,8 @@ const NewArticle = () => {
     image: null,
   });
   const [content, setContent] = useState("");
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState<userType | any>(null);
-  const refreshAccessToken = async () => {
-    try {
-      if (sessionStorage.getItem("token")) {
-        return sessionStorage.getItem("token");
-      }
+  const { user, token } = useAuth();
 
-      const response = await fetch("/api/user/session/token/refresh", {
-        method: "POST",
-        credentials: "include", // Ensure cookies are sent
-      });
-
-      if (!response.ok) {
-        return (window.location.href = "/");
-      }
-
-      const data = await response.json();
-      if (data.token) return window.location.href = "/";
-      sessionStorage.setItem("token", data.token);
-      return data.token;
-    } catch (error) {
-      console.error("Error refreshing access token:", error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const tokenTemp = await refreshAccessToken();
-        if (!tokenTemp) {
-          console.warn("No token available");
-          return;
-        }
-        setToken(tokenTemp);
-
-        const response = await fetch(`/api/user/session/token/check`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${tokenTemp}` },
-        });
-
-        if (!response.ok) {
-          window.location.href = "/user/login";
-        }
-
-        const check = await response.json();
-        setUser(check);
-
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setUser(null);
-      }
-    }
-
-    // Only fetch data if user is null
-    if (user === null) {
-      fetchUserData();
-    }
-  }, [user]);
   const previewPhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -104,7 +47,7 @@ const NewArticle = () => {
     data.append("title", formData.title);
     data.append("link", formData.link);
     data.append("pembuat", user.username);
-    data.append("content", content)
+    data.append("content", content);
     if (formData.image) {
       data.append("image", formData.image);
     }
@@ -130,20 +73,49 @@ const NewArticle = () => {
   return (
     <div className="container" id="container">
       <h1>Artikel Baru</h1>
-      <p>Jangan lupa membaca <a href="/rules" className="link">Peraturan</a></p>
+      <p>
+        Jangan lupa membaca{" "}
+        <a href="/rules" className="link">
+          Peraturan
+        </a>
+      </p>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <div className="form-group mb-2">
+        <div className="form-group mb-2">
           {preview && (
-            <img src={preview} style={{ height: "250px", objectFit: "contain", background: "rgba(0, 0, 0, 0)", borderRadius: "12px" }} className="img-fluid" alt="Preview" />
+            <img
+              src={preview}
+              style={{
+                height: "250px",
+                objectFit: "contain",
+                background: "rgba(0, 0, 0, 0)",
+                borderRadius: "12px",
+              }}
+              className="img-fluid"
+              alt="Preview"
+            />
           )}
         </div>
         <div className="form-group mb-2">
           <label htmlFor="title">Title:</label>
-          <input type="text" id="title" name="title" className="form-control" value={formData.title} onChange={handleChange} />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            className="form-control"
+            value={formData.title}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group mb-2">
           <label htmlFor="link">Link Video (Optional):</label>
-          <input type="text" id="link" name="link" className="form-control" value={formData.link} onChange={handleChange} />
+          <input
+            type="text"
+            id="link"
+            name="link"
+            className="form-control"
+            value={formData.link}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group mb-2">
@@ -160,9 +132,17 @@ const NewArticle = () => {
           </div>
         </div>
         <div className="form-group mb-2">
-          <ReactQuill id="content" className="form-control" value={content} onChange={setContent} />
+          <ReactQuill
+            id="content"
+            className="form-control"
+            value={content}
+            onChange={setContent}
+          />
         </div>
-        <button type="submit" className="btn btn-primary btn-lg mt-3 rounded-lg">
+        <button
+          type="submit"
+          className="btn btn-primary btn-lg mt-3 rounded-lg"
+        >
           <i className="fa fa-paper-plane" aria-hidden="true"></i> Kirim
         </button>
       </form>

@@ -4,6 +4,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 import LoadingSpinner from "@/components/Loading";
+import { useAuth } from "@/context/AuthContext";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -28,67 +29,8 @@ const EditArticle = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState<ContentType>("");
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState<userType | any>(null);
+  const { user, token } = useAuth();
 
-  const refreshAccessToken = async () => {
-    try {
-      if (sessionStorage.getItem("token")) {
-        return sessionStorage.getItem("token");
-      }
-
-      const response = await fetch("/api/user/session/token/refresh", {
-        method: "POST",
-        credentials: "include", // Ensure cookies are sent
-      });
-
-      if (!response.ok) {
-        return (window.location.href = "/");
-      }
-
-      const data = await response.json();
-      if (!data.token) return window.location.href = "/";
-      sessionStorage.setItem("token", data.token);
-      return data.token;
-    } catch (error) {
-      console.error("Error refreshing access token:", error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const tokenTemp = await refreshAccessToken();
-        if (!tokenTemp) {
-          console.warn("No token available");
-          return;
-        }
-        setToken(tokenTemp);
-
-        const response = await fetch(`/api/user/session/token/check`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${tokenTemp}` },
-        });
-
-        if (!response.ok) {
-          window.location.href = "/user/login";
-        }
-
-        const check = await response.json();
-        setUser(check);
-
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setUser(null);
-      }
-    }
-
-    // Only fetch data if user is null
-    if (user === null) {
-      fetchUserData();
-    }
-  }, [user]);
   useEffect(() => {
     fetch(`/api/post/${id}`)
       .then((response) => response.json())
@@ -136,7 +78,11 @@ const EditArticle = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleContentChange = (value: string, index?: number, isTitle?: boolean) => {
+  const handleContentChange = (
+    value: string,
+    index?: number,
+    isTitle?: boolean,
+  ) => {
     if (Array.isArray(content) && index !== undefined) {
       const newContent = [...content];
       if (isTitle) {
@@ -168,7 +114,7 @@ const EditArticle = () => {
     data.append("content", JSON.stringify(content)); // Serialize content array or string
 
     try {
-      const response = await fetch("/api/post/edit/" + id , {
+      const response = await fetch("/api/post/edit/" + id, {
         method: "POST",
         body: data,
         headers: { Authorization: `Bearer ${token}` },
@@ -192,13 +138,23 @@ const EditArticle = () => {
   return (
     <div className="container" id="container">
       <h1>Edit Artikel</h1>
-      <p>Jangan lupa membaca <a href="/rules" className="link">Peraturan</a></p>
+      <p>
+        Jangan lupa membaca{" "}
+        <a href="/rules" className="link">
+          Peraturan
+        </a>
+      </p>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="form-group mb-2">
           {preview && (
             <img
               src={preview}
-              style={{ height: "250px", objectFit: "contain", background: "rgba(0, 0, 0, 0)", borderRadius: "12px" }}
+              style={{
+                height: "250px",
+                objectFit: "contain",
+                background: "rgba(0, 0, 0, 0)",
+                borderRadius: "12px",
+              }}
               className="img-fluid"
               alt="Preview"
             />
@@ -252,25 +208,40 @@ const EditArticle = () => {
                     className="form-control mb-2"
                     placeholder="Judul Bab"
                     value={bab.babTitle}
-                    onChange={(e) => handleContentChange(e.target.value, index, true)}
+                    onChange={(e) =>
+                      handleContentChange(e.target.value, index, true)
+                    }
                   />
                   <ReactQuill
                     className="form-control"
                     value={bab.babContent}
-                    onChange={(value) => handleContentChange(value, index, false)}
+                    onChange={(value) =>
+                      handleContentChange(value, index, false)
+                    }
                   />
                 </div>
               ))}
-              <button type="button" className="btn btn-secondary mt-2" onClick={addNewBab}>
+              <button
+                type="button"
+                className="btn btn-secondary mt-2"
+                onClick={addNewBab}
+              >
                 Tambah Bab Baru
               </button>
             </>
           ) : (
-            <ReactQuill className="form-control" value={content} onChange={(value) => setContent(value)} />
+            <ReactQuill
+              className="form-control"
+              value={content}
+              onChange={(value) => setContent(value)}
+            />
           )}
         </div>
 
-        <button type="submit" className="btn btn-primary btn-lg mt-3 rounded-lg">
+        <button
+          type="submit"
+          className="btn btn-primary btn-lg mt-3 rounded-lg"
+        >
           <i className="fa fa-paper-plane" aria-hidden="true"></i> Kirim
         </button>
       </form>

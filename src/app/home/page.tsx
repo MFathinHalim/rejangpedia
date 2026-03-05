@@ -7,74 +7,13 @@ import { Zoom } from "@mui/material";
 import { Book, LogIn, LogOut, Search } from "lucide-react";
 import Leaderboard from "../quiz/leaderboard/page";
 import PostList from "../search/page";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const [data, setData] = useState<Data[] | []>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<userType | any>(null);
-
-  const refreshAccessToken = async () => {
-    try {
-      if (sessionStorage.getItem("token")) {
-        return sessionStorage.getItem("token");
-      }
-
-      const response = await fetch("/api/user/session/token/refresh", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        return;
-      }
-
-      const data = await response.json();
-      sessionStorage.setItem("token", data.token);
-      return data.token;
-    } catch (error) {
-      console.error("Error refreshing access token:", error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const tokenTemp = await refreshAccessToken();
-        if (!tokenTemp) {
-          console.warn("No token available");
-          return;
-        }
-
-        const response = await fetch(`/api/user/session/token/check`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${tokenTemp}` },
-        });
-
-        if (!response.ok) {
-          console.error(`Fetch error: ${response.status}`);
-          return;
-        }
-
-        const text = await response.text();
-        if (text) {
-          const check = JSON.parse(text);
-          setUser(check);
-        } else {
-          console.warn("Empty response");
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setUser(null);
-      }
-    }
-
-    if (user === null) {
-      fetchUserData();
-    }
-  }, [user]);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     fetch("/api/post")
@@ -92,26 +31,6 @@ export default function Home() {
   function search() {
     window.location.href = "/search/" + searchTerm;
   }
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch("/api/user/session/logout", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        sessionStorage.clear();
-        window.location.href = "/";
-      } else {
-        console.error("Failed to logout");
-      }
-    } catch (error) {
-      console.error("An error occurred during logout:", error);
-    }
-  };
 
   return (
     <>
@@ -148,10 +67,7 @@ export default function Home() {
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                <button
-                  className="dropdown-item text-danger"
-                  onClick={handleLogout}
-                >
+                <button className="dropdown-item text-danger" onClick={logout}>
                   Keluar
                 </button>
               </li>

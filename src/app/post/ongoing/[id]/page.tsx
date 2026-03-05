@@ -1,18 +1,20 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const ArticlePage = () => {
   const { id } = useParams();
   const [data, setData] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const { tokenTemp } = useAuth();
 
   useEffect(() => {
     fetch(`/api/post/ongoing/${id}`)
       .then((response) => response.json())
       .then((data1) => {
         setData(data1.data);
-        console.log(data1)
+        console.log(data1);
         setLoading(false);
       })
       .catch((error) => {
@@ -24,29 +26,8 @@ const ArticlePage = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-  const refreshAccessToken = async () => {
-    try {
-      if (sessionStorage.getItem("token")) return sessionStorage.getItem("token");
-
-      const response = await fetch("/api/user/session/token/refresh", {
-        method: "POST",
-        credentials: "include", // Ensure cookies are sent
-      });
-
-      if (!response.ok) return (window.location.href = "/");
-
-      const data = await response.json();
-      if (data.token) return (window.location.href = "/");
-      sessionStorage.setItem("token", data.token);
-      return data.token;
-    } catch (error) {
-      console.error("Error refreshing access token:", error);
-      return null;
-    }
-  };
 
   const handleAccept = async (id: string) => {
-    const tokenTemp = await refreshAccessToken();
     if (!tokenTemp) return console.error("No token available");
 
     try {
@@ -57,7 +38,9 @@ const ArticlePage = () => {
 
       if (response.ok) {
         console.log(`Post ${id} accepted.`);
-        setData((prevData: any) => prevData.filter((post: any) => post.id !== id)); // Remove accepted post
+        setData((prevData: any) =>
+          prevData.filter((post: any) => post.id !== id),
+        ); // Remove accepted post
       } else {
         console.error(`Failed to accept post ${id}`);
       }
@@ -66,7 +49,6 @@ const ArticlePage = () => {
     }
   };
   const handleDelete = async (id: string) => {
-    const tokenTemp = await refreshAccessToken();
     if (!tokenTemp) return console.error("No token available");
 
     try {
@@ -76,7 +58,9 @@ const ArticlePage = () => {
       });
 
       if (response.ok) {
-        setData((prevData: any) => prevData.filter((post: any) => post.id !== id)); // Remove accepted post
+        setData((prevData: any) =>
+          prevData.filter((post: any) => post.id !== id),
+        ); // Remove accepted post
       } else {
         console.error(`Failed to accept post ${id}`);
       }
@@ -98,12 +82,15 @@ const ArticlePage = () => {
               borderLeft: "3px solid #138496",
             }}
           >
-            <strong style={{ color: "#138496" }}>Ditulis oleh</strong> {data.Pembuat}
+            <strong style={{ color: "#138496" }}>Ditulis oleh</strong>{" "}
+            {data.Pembuat}
             {data.Waktu ? ` • ${data.Waktu}` : " • 07-Maret-2023"}
             {data.Diedit && (
               <>
-                <br /><br id="x" />
-                <strong style={{ color: "#138496" }}>Diedit oleh</strong> {data.Diedit}
+                <br />
+                <br id="x" />
+                <strong style={{ color: "#138496" }}>Diedit oleh</strong>{" "}
+                {data.Diedit}
                 {data.Edit ? ` • ${data.Edit}` : " • 07-Maret-2023"}
               </>
             )}
@@ -145,10 +132,17 @@ const ArticlePage = () => {
           </div>
 
           <div className="d-flex mt-3">
-            <button className="btn btn-info rounded-pill mr-1 text-white" onClick={() => alert("Share functionality here!")}>
-              <i className="fa fa-share text-white" aria-hidden="true"></i> Bagikan
+            <button
+              className="btn btn-info rounded-pill mr-1 text-white"
+              onClick={() => alert("Share functionality here!")}
+            >
+              <i className="fa fa-share text-white" aria-hidden="true"></i>{" "}
+              Bagikan
             </button>
-            <a className="btn btn-secondary rounded-pill" href={`/edit/${data.id}`}>
+            <a
+              className="btn btn-secondary rounded-pill"
+              href={`/edit/${data.id}`}
+            >
               <i className="fa fa-pencil" aria-hidden="true"></i> Edit Artikel
             </a>
             <button
@@ -166,14 +160,23 @@ const ArticlePage = () => {
           </div>
 
           <div style={{ borderRadius: "24px" }}>
-          {Array.isArray(data.Content) && data.Content.length > 0 ? (
+            {Array.isArray(data.Content) && data.Content.length > 0 ? (
               data.Content.map((bab: any, index: any) => (
                 <div className="my-4" key={index}>
                   <h3>{bab.babTitle}</h3>
-                  <p id={bab.babTitle} className="text-justify" dangerouslySetInnerHTML={{ __html: bab.babContent }}></p>
+                  <p
+                    id={bab.babTitle}
+                    className="text-justify"
+                    dangerouslySetInnerHTML={{ __html: bab.babContent }}
+                  ></p>
                 </div>
-              ))) : (
-              <p id={data.Title} className="text-justify" dangerouslySetInnerHTML={{ __html: data.Content }}></p>
+              ))
+            ) : (
+              <p
+                id={data.Title}
+                className="text-justify"
+                dangerouslySetInnerHTML={{ __html: data.Content }}
+              ></p>
             )}
           </div>
         </div>

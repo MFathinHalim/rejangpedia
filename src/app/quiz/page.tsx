@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { useRef } from "react";
-
+import { useAuth } from "@/context/AuthContext";
 export default function QuizPage() {
-  const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const { user, token } = useAuth();
 
   const [quiz, setQuiz] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -24,49 +23,6 @@ export default function QuizPage() {
       correctAudioRef.current.volume = 0.7;
     }
   }, []);
-
-  const refreshAccessToken = async () => {
-    try {
-      const cached = sessionStorage.getItem("token");
-      if (cached) return cached;
-
-      const res = await fetch("/api/user/session/token/refresh", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (!res.ok) return (window.location.href = "/");
-
-      const data = await res.json();
-      if (!data.token) return (window.location.href = "/");
-
-      sessionStorage.setItem("token", data.token);
-      return data.token;
-    } catch {
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    async function fetchUser() {
-      const fresh = await refreshAccessToken();
-      if (!fresh) return;
-
-      setToken(fresh);
-
-      const res = await fetch("/api/user/session/token/check", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${fresh}` },
-      });
-
-      if (!res.ok) return (window.location.href = "/user/login");
-
-      const data = await res.json();
-      setUser(data);
-    }
-
-    if (!user) fetchUser();
-  }, [user]);
 
   const fetchNewQuiz = async () => {
     setLoading(true);

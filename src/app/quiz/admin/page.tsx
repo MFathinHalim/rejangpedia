@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useAuth } from "@/context/AuthContext";
 export default function AdminQuizPage() {
   const [user, setUser] = useState(null);
   const [soal, setSoal] = useState("");
@@ -13,47 +13,32 @@ export default function AdminQuizPage() {
     { jawaban: "", benar: false, score: 0 },
   ]);
   const [loading, setLoading] = useState(false);
-
-  const refreshAccessToken = async () => {
-    try {
-      if (sessionStorage.getItem("token"))
-        return sessionStorage.getItem("token");
-
-      const res = await fetch("/api/user/session/token/refresh", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (!res.ok) return (window.location.href = "/");
-
-      const json = await res.json();
-      if (!json.token) return (window.location.href = "/");
-
-      sessionStorage.setItem("token", json.token);
-      return json.token;
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  };
+  const { token } = useAuth();
 
   useEffect(() => {
-    async function checkAdmin() {
-      const token = await refreshAccessToken();
-      if (!token) return;
+    if (!token) return; // tunggu token ready
 
+    async function checkAdmin() {
       const res = await fetch("/api/user/session/token/check", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      if (!res.ok) {
+        window.location.href = "/";
+        return;
+      }
+
       const json = await res.json();
       setUser(json);
-      if (!json.atmin) window.location.href = "/";
+
+      if (!json.atmin) {
+        window.location.href = "/";
+      }
     }
 
     checkAdmin();
-  }, []);
+  }, [token]);
   //@ts-ignore
   const updateJawaban = (idx, field, value) => {
     const copy = [...jawaban];
@@ -65,8 +50,6 @@ export default function AdminQuizPage() {
 
   const createQuiz = async () => {
     setLoading(true);
-    const token = await refreshAccessToken();
-    if (!token) return alert("Token missing");
 
     try {
       const res = await fetch("/api/quiz/create", {

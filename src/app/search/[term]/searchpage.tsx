@@ -60,7 +60,9 @@ export default function SearchPage() {
         const newMessages = data.answer;
         setMessages(newMessages);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setMessages(
+          "Mohon Maaf untuk AI saat ini tak tersedia karena token API nya habis :(",
+        );
       } finally {
         setLoading(false);
       }
@@ -138,7 +140,7 @@ export default function SearchPage() {
     <div className="container" id="container">
       <div className="px-3 pb-3">
         <h3>Dinda Menjawab</h3>
-        <div className="d-flex align-items-start gap-3">
+        <div className="d-flex align-items-start gap-3 pt-3">
           <img
             src="/happy.gif"
             alt="AI Avatar"
@@ -166,14 +168,14 @@ export default function SearchPage() {
               }}
             />
 
-            {messages && (
+            {/*messages && (
               <button
                 className="btn btn-sm btn-outline-primary"
                 onClick={() => setShowFullMessage((prev) => !prev)}
               >
                 {showFullMessage ? "Sembunyikan" : "Baca Rangkuman"}
               </button>
-            )}
+            )*/}
           </div>
         </div>
 
