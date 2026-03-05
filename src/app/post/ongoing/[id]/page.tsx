@@ -7,7 +7,7 @@ const ArticlePage = () => {
   const { id } = useParams();
   const [data, setData] = useState<any>({});
   const [loading, setLoading] = useState(true);
-  const { tokenTemp } = useAuth();
+  const { token: tokenTemp } = useAuth();
 
   useEffect(() => {
     fetch(`/api/post/ongoing/${id}`)
