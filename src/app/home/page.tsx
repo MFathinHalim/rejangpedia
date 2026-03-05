@@ -38,7 +38,7 @@ export default function Home() {
         {user ? (
           <div className="dropdown">
             <img
-              src={user.avatar || "./happy.gif"}
+              src={"./happy.gif"}
               alt="avatar"
               width={40}
               height={40}
