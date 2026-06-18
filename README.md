@@ -1,12 +1,6 @@
 # Rejangpedia
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/MFathinHalim/rejangpedia/main/public/logo.png" alt="Rejangpedia Logo" width="120" />
-</p>
-
-<p align="center">
-  <strong>An all-in-one application for digital literacy and community participation.</strong>
-</p>
+<img src="https://raw.githubusercontent.com/MFathinHalim/rejangpedia/main/public/logo.png" alt="Rejangpedia Logo" width="120" />
+<strong>An all-in-one application for digital literacy and community participation.</strong>
 
 Rejangpedia adalah platform digital yang menggabungkan literasi, informasi, dan partisipasi masyarakat dalam satu tempat.
 
