@@ -1,46 +1,73 @@
-# 🌀 Rejangpedia
+# Rejangpedia
 
-**Rejangpedia** adalah kamus digital interaktif yang dirancang untuk melestarikan bahasa Rejang, salah satu bahasa daerah dari Bengkulu, Indonesia. Proyek ini bertujuan untuk mempermudah masyarakat dalam mencari arti kata, mempelajari kosakata, dan mengenal budaya Rejang lebih dekat melalui teknologi.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MFathinHalim/rejangpedia/main/public/logo.png" alt="Rejangpedia Logo" width="120" />
+</p>
 
-![Logo](https://raw.githubusercontent.com/MFathinHalim/rejangpedia/main/public/logo.png)
+<p align="center">
+  <strong>An all-in-one application for digital literacy and community participation.</strong>
+</p>
 
-## ✨ Fitur Utama
+Rejangpedia adalah platform digital yang menggabungkan literasi, informasi, dan partisipasi masyarakat dalam satu tempat.
 
-- 🔍 **Pencarian Kata**: Cari arti kata dalam bahasa Rejang ke Bahasa Indonesia dan sebaliknya.
-- 📚 **Kosakata Lengkap**: Tersedia ratusan kosakata yang terus bertambah.
-- 🌙 **Mode Gelap/Terang**: Nyaman digunakan kapan saja, sesuai preferensi pengguna.
-- 🧠 **Halaman Edukasi**: Informasi seputar bahasa dan budaya Rejang.
-- ⚡ **Responsive Design**: Tampilan optimal di desktop maupun mobile.
+Dirancang untuk membantu masyarakat mengakses informasi, belajar, berdiskusi, dan berkontribusi secara aktif, Rejangpedia memanfaatkan teknologi untuk memperkuat pengetahuan serta keterlibatan sosial di era digital.
 
-## 🛠️ Teknologi yang Digunakan
+Platform ini tidak hanya menjadi sumber informasi, tetapi juga ruang kolaborasi yang mendorong masyarakat untuk terus belajar, berbagi, dan tumbuh bersama.
 
-- **Next.js** – Framework React untuk frontend dan backend.
-- **Tailwind CSS** – Styling cepat dan efisien.
-- **MongoDB** – Database fleksibel untuk menyimpan kata dan artinya.
-- **TypeScript** – Bahasa yang powerful untuk menjaga kualitas code.
-- **Zustand** – State management sederhana tapi mantap.
+## Screenshot
+<img width="1902" height="1010" alt="image" src="https://github.com/user-attachments/assets/3639c825-5ce5-4855-bab5-8e6608de0f87" />
 
-## 📦 Cara Menjalankan Project Lokal
+## Fitur Utama
+
+* Menyediakan berbagai informasi dan konten edukatif dalam satu platform
+* Mendukung literasi digital yang mudah diakses oleh semua kalangan
+* Menjadi wadah partisipasi dan kontribusi masyarakat
+* Antarmuka yang sederhana, modern, dan responsif
+* Dapat digunakan di desktop maupun perangkat mobile
+
+## Visi
+
+Membangun masyarakat yang lebih melek digital, aktif berpartisipasi, dan mampu memanfaatkan teknologi untuk kemajuan bersama.
+
+## Misi
+
+* Menyediakan akses informasi yang mudah dan terpercaya
+* Mendorong budaya belajar sepanjang hayat
+* Meningkatkan partisipasi masyarakat melalui teknologi
+* Mengembangkan platform yang inklusif dan berkelanjutan
+
+## Teknologi yang Digunakan
+
+* Next.js
+* Tailwind CSS
+* MongoDB
+* TypeScript
+* Zustand
+
+## Menjalankan Secara Lokal
 
 ```bash
-# 1. Clone repo ini
 git clone https://github.com/MFathinHalim/rejangpedia.git
 cd rejangpedia
 
-# 2. Install dependencies
 npm install
 
-# 3. Buat file .env.local dan isi dengan:
+# buat file .env.local
 MONGODB_URI=your_mongodb_connection_string
 
-# 4. Jalankan server development
 npm run dev
 ```
 
-## 📜 Kontribusi
-Punya ide, saran, atau ingin bantu mengembangkan Rejangpedia? Pull request dan issue sangat welcome! Yuk bareng-bareng lestarikan budaya daerah kita! ❤️
+## Kontribusi
 
-## 📄 Lisensi
-Proyek ini berlisensi MIT – silakan gunakan dan modifikasi sesuai kebutuhan.
+Kontribusi dalam bentuk ide, laporan bug, maupun pull request sangat terbuka.
 
-> Dibuat dengan ❤️ oleh M. Fathin Halim – developer yang ingin menjaga warisan budaya lewat teknologi ✊
+Mari bersama-sama membangun ekosistem digital yang lebih inklusif dan bermanfaat bagi masyarakat.
+
+## Lisensi
+
+Proyek ini menggunakan lisensi MIT.
+
+---
+
+Dikembangkan oleh **M. Fathin Halim** dengan harapan bahwa teknologi tidak hanya menjadi alat, tetapi juga jembatan untuk belajar, berpartisipasi, dan menciptakan perubahan yang berarti.
